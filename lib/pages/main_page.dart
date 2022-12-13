@@ -41,7 +41,6 @@ class _MyHomePageState extends State<MyHomePage> {
                   }
                 }
               } else if (widget.title != "Today") {
-                print("aallll tasks");
                 if (i.reminderCompleted == false) {
                   reminders.add(i);
                 } else {
@@ -591,7 +590,6 @@ class _MyHomePageState extends State<MyHomePage> {
                           reminderDate: reminderDate,
                           reminderCompleted: false,
                           remindertype: reminderType,
-                          id: provider.reminders.length,
                           simiReminders: jsonEncode(simireminders));
                       provider.addreminder(reminder);
 

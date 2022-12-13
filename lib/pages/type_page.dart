@@ -141,7 +141,7 @@ class _TypePageState extends State<TypePage> {
               ),
               appBar: AppBar(
                 backgroundColor: Color.fromARGB(255, 18, 82, 156),
-                title: Text("Medical Care"),
+                title: Text(provider.types[widget.typeId].typeName!),
               ),
               body: SingleChildScrollView(
                 child: Column(

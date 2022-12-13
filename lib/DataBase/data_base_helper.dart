@@ -1,7 +1,7 @@
 import 'package:sqflite/sqflite.dart';
 import 'package:path/path.dart';
 
-class DataBaseHelper {
+class DBManager {
   static const tableName = 'Reminders';
   static Future<Database> database() async {
     final dbPath = await getDatabasesPath();
@@ -21,13 +21,13 @@ class DataBaseHelper {
   }
 
   static Future addReminder(Map<String, Object> data) async {
-    final db = await DataBaseHelper.database();
+    final db = await DBManager.database();
     return db.insert(tableName, data,
         conflictAlgorithm: ConflictAlgorithm.replace);
   }
 
   static Future<List<Map<String, dynamic>>> loadReminders() async {
-    final data = await DataBaseHelper.database();
+    final data = await DBManager.database();
     var result = await data.query(tableName);
     return result;
   }
@@ -36,7 +36,7 @@ class DataBaseHelper {
     String table,
     int id,
   ) async {
-    final data = await DataBaseHelper.database();
+    final data = await DBManager.database();
     await data.delete(
       table,
       where: "id = ?",

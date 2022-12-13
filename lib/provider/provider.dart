@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:medical_app/models/reminder.dart';
 import '../DataBase/data_base_helper.dart';
-import '../models/categories.dart';
+import '../models/types.dart';
 
 class ReminderProvider with ChangeNotifier {
   List<Reminder> reminders = [];
@@ -24,7 +24,7 @@ class ReminderProvider with ChangeNotifier {
   ];
 
   Future addreminder(Reminder reminder) async {
-    await DataBaseHelper.addReminder({
+    await DBManager.addReminder({
       'Reminder_Name': reminder.reminderName!,
       'Reminder_Date': reminder.reminderDate!,
       'Reminder_Completed': reminder.reminderCompleted == false ? 0 : 1,
@@ -36,7 +36,7 @@ class ReminderProvider with ChangeNotifier {
   }
 
   Future<void> loadReminders() async {
-    final dataList = await DataBaseHelper.loadReminders();
+    final dataList = await DBManager.loadReminders();
 
     reminders = dataList
         .map((data) => Reminder(
@@ -53,10 +53,10 @@ class ReminderProvider with ChangeNotifier {
 
   Future<void> changereminderState(id, bool reminderCompleted) async {
     reminderCompleted = !reminderCompleted;
-    final data = await DataBaseHelper.database();
+    final data = await DBManager.database();
 
     await data.update(
-      'Reminders',
+      DBManager.tableName,
       {'Reminder_Completed': reminderCompleted == false ? 0 : 1},
       where: "id = ?",
       whereArgs: [id],
@@ -65,24 +65,11 @@ class ReminderProvider with ChangeNotifier {
     notifyListeners();
   }
 
-  Future<void> changeRemindertype(id, String remindertype) async {
-    final data = await DataBaseHelper.database();
-
-    await data.update(
-      'reminders',
-      {'reminder_type': remindertype},
-      where: "id = ?",
-      whereArgs: [id],
-    );
-
-    notifyListeners();
-  }
-
   Future<void> updatesimiReminder(id, String simireminders) async {
-    final data = await DataBaseHelper.database();
+    final data = await DBManager.database();
     print(simireminders);
     await data.update(
-      'reminders',
+      DBManager.tableName,
       {'Simi_Reminders': simireminders},
       where: "id = ?",
       whereArgs: [id],
@@ -92,7 +79,7 @@ class ReminderProvider with ChangeNotifier {
   }
 
   deleteReminder(int id) {
-    DataBaseHelper.deleteReminder(DataBaseHelper.tableName, id);
+    DBManager.deleteReminder(DBManager.tableName, id);
     notifyListeners();
   }
 }
