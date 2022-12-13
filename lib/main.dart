@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:medical_app/provider/provider.dart';
 import 'package:provider/provider.dart';
-import 'main_page.dart';
+import 'pages/main_page.dart';
 
 void main() {
   runApp(ChangeNotifierProvider(
@@ -18,7 +18,7 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      home: MyHomePage(typeId: 1),
+      home: MyHomePage(title: "All Reminders"),
     );
   }
 }
